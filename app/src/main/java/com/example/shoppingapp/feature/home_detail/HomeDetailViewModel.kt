@@ -1,4 +1,4 @@
-package com.example.shoppingapp.feature.home
+package com.example.shoppingapp.feature.home_detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,26 +11,25 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeDetailViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
 
-    private val _state = MutableLiveData<AllProductsState>()
-    val state: LiveData<AllProductsState> = _state
+    private val _state = MutableLiveData<SingleProductState>()
+    val state: LiveData<SingleProductState> = _state
 
-
-    fun getAllProducts() {
+    fun getSingleProduct(id: Int) {
         viewModelScope.launch {
-            useCases.getAllProductsUseCase().collect { result ->
+            useCases.getSingleProductUseCase(id = id).collect {result->
                 when(result) {
                     is Resource.Success -> {
-                        _state.value = AllProductsState.Success(products = result.data)
+                        _state.value = SingleProductState.Success(products = result.data)
                     }
                     is Resource.Loading -> {
-                        _state.value = AllProductsState.Loading
+                        _state.value = SingleProductState.Loading
                     }
                     is Resource.Error -> {
-                        _state.value = AllProductsState.Error(error = result.errorMessage)
+                        _state.value = SingleProductState.Error(error = result.errorMessage)
                     }
                 }
             }
