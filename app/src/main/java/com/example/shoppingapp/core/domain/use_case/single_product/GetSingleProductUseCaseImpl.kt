@@ -1,7 +1,7 @@
 package com.example.shoppingapp.core.domain.use_case.single_product
 
 import com.example.shoppingapp.core.common.Resource
-import com.example.shoppingapp.core.data.model.ProductDto
+import com.example.shoppingapp.core.data.source.remote.model.ProductDto
 import com.example.shoppingapp.core.domain.mapper.ShoppingMapper
 import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
 import com.example.shoppingapp.core.domain.repository.ShoppingRepository

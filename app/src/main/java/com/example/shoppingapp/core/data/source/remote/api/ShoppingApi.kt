@@ -1,6 +1,6 @@
-package com.example.shoppingapp.core.data.api
+package com.example.shoppingapp.core.data.source.remote.api
 
-import com.example.shoppingapp.core.data.model.ProductDto
+import com.example.shoppingapp.core.data.source.remote.model.ProductDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 

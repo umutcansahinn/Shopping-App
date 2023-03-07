@@ -3,18 +3,16 @@ package com.example.shoppingapp.feature.home_detail
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.shoppingapp.R
-import com.example.shoppingapp.core.common.gone
 import com.example.shoppingapp.core.common.loadImage
 import com.example.shoppingapp.core.common.viewBinding
-import com.example.shoppingapp.core.common.visible
+import com.example.shoppingapp.core.data.source.local.BasketEntity
+import com.example.shoppingapp.core.data.source.local.RatingEntity
 import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
 import com.example.shoppingapp.databinding.FragmentHomeDetailBinding
-import com.example.shoppingapp.feature.home.AllProductsState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,17 +30,17 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
 
     private fun observe() {
         viewModel.state.observe(viewLifecycleOwner) {
-            when(it) {
-                is SingleProductState.Loading-> {
+            when (it) {
+                is SingleProductState.Loading -> {
                     with(binding) {
 
                     }
                 }
-                is SingleProductState.Error-> {
+                is SingleProductState.Error -> {
                     with(binding) {
                     }
                 }
-                is SingleProductState.Success-> {
+                is SingleProductState.Success -> {
                     singleProductData(product = it.products)
                     with(binding) {
 
@@ -63,10 +61,23 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
             imageViewProductImage.loadImage(product.image)
             textViewProductCategoryName.text = product.category
             textViewProductDescription.text = product.description
-            textViewProductPrice.text= "${product.price}$"
+            textViewProductPrice.text = "${product.price}$"
 
             buttonAddToBag.setOnClickListener {
-                Toast.makeText(requireContext(),"add to bag",Toast.LENGTH_LONG).show()
+                viewModel.addEntityBasket(
+                    entity = BasketEntity(
+                        category = product.category,
+                        description = product.description,
+                        id = product.id,
+                        image = product.image,
+                        price = product.price,
+                        rating = RatingEntity(
+                            count = product.rating.count,
+                            rate = product.rating.rate
+                        ) ,
+                        title = product.title
+                    )
+                )
             }
         }
     }

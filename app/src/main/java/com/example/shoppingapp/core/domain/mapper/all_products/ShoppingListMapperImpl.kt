@@ -1,8 +1,8 @@
 package com.example.shoppingapp.core.domain.mapper.all_products
 
 import com.example.shoppingapp.core.common.orZero
-import com.example.shoppingapp.core.data.model.ProductDto
-import com.example.shoppingapp.core.data.model.Rating
+import com.example.shoppingapp.core.data.source.remote.model.ProductDto
+import com.example.shoppingapp.core.data.source.remote.model.Rating
 import com.example.shoppingapp.core.domain.mapper.ShoppingListMapper
 import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
 import javax.inject.Inject

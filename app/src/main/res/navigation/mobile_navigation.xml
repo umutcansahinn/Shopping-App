@@ -17,9 +17,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.shoppingapp.feature.dashboard.DashboardFragment"
+        android:name="com.example.shoppingapp.feature.basket.BasketFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_basket" />
 
     <fragment
         android:id="@+id/navigation_notifications"

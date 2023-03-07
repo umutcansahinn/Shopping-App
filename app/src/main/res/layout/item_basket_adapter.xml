@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/teal_200"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/imageViewEntityImage"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:src="@color/teal_200"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewEntityCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="category"
+            app:layout_constraintLeft_toRightOf="@+id/imageViewEntityImage"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textViewEntityPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="price"
+            app:layout_constraintLeft_toRightOf="@+id/imageViewEntityImage"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewEntityCategory"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toRightOf="@id/imageViewEntityImage"
+            app:layout_constraintTop_toBottomOf="@id/textViewEntityPrice"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:id="@+id/imageViewMinus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_remove_24"/>
+
+            <TextView
+                android:id="@+id/textViewEntityCount"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:text="1"
+                android:textSize="18dp"
+                android:gravity="center"/>
+
+            <ImageView
+                android:id="@+id/imageViewPlus"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/baseline_add_24" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24"
+            app:layout_constraintLeft_toRightOf="@id/imageViewEntityImage"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

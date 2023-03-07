@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoppingapp.core.common.Resource
+import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.core.domain.use_case.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -33,6 +34,12 @@ class HomeDetailViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun addEntityBasket(entity: BasketEntity) {
+        viewModelScope.launch {
+            useCases.insertEntityUseCase(entity = entity)
         }
     }
 }

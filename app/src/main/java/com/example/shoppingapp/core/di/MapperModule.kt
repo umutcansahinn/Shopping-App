@@ -1,6 +1,6 @@
 package com.example.shoppingapp.core.di
 
-import com.example.shoppingapp.core.data.model.ProductDto
+import com.example.shoppingapp.core.data.source.remote.model.ProductDto
 import com.example.shoppingapp.core.domain.mapper.ShoppingListMapper
 import com.example.shoppingapp.core.domain.mapper.ShoppingMapper
 import com.example.shoppingapp.core.domain.mapper.all_products.ShoppingListMapperImpl

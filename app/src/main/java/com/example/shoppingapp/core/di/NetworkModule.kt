@@ -1,7 +1,7 @@
 package com.example.shoppingapp.core.di
 
 import com.example.shoppingapp.core.common.Constants.BASE_URL
-import com.example.shoppingapp.core.data.api.ShoppingApi
+import com.example.shoppingapp.core.data.source.remote.api.ShoppingApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

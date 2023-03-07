@@ -1,6 +1,6 @@
 package com.example.shoppingapp.core.domain.modelUi
 
-import com.example.shoppingapp.core.data.model.Rating
+import com.example.shoppingapp.core.data.source.remote.model.Rating
 
 data class ProductUiModel(
     val category: String,
