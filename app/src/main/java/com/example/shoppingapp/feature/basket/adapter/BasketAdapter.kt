@@ -50,7 +50,6 @@ class BasketAdapter(
         return basketList.size
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             imageViewEntityImage.loadImage(basketList[position].image)

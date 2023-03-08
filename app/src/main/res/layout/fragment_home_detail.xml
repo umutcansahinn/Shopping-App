@@ -12,20 +12,48 @@
         android:layout_height="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/orange_500"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:paddingBottom="16dp"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/rounded_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/rounded_corner"
+                android:layout_marginBottom="-25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewProductImage"/>
+
+            <ImageButton
+                android:id="@+id/imageButtonBack"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:padding="12dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/circle_orange"
+                android:src="@drawable/baseline_arrow_back_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
                 android:id="@+id/imageViewProductImage"
                 android:layout_width="250dp"
                 android:layout_height="270dp"
-                android:layout_marginTop="70dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="100dp"
                 android:src="@color/red"/>
 
             <TextView
@@ -33,21 +61,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="category"
+                android:textColor="@color/white"
+                android:textSize="17sp"
                 android:gravity="center"
-                android:layout_marginTop="8dp"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewProductImage"
+                android:layout_marginTop="50dp"/>
 
             <TextView
                 android:id="@+id/textViewProductDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="description"
+                android:textColor="@color/white"
+                android:textSize="17sp"
                 android:gravity="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewProductCategoryName"
                 android:layout_margin="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewProductDescription"
                 android:orientation="horizontal">
 
                 <TextView
@@ -55,22 +97,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="price"
-                    android:layout_marginRight="100dp"
-                    android:textSize="25dp"
+                    android:textColor="@color/white"
+
+                    android:layout_marginEnd="100dp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
                     android:gravity="center"/>
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/buttonAddToBag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:background="@drawable/button_corner"
                     android:text="Add to Bag"
-                    android:layout_marginRight="16dp"/>
-
+                    android:textColor="@color/orange_500"
+                    android:layout_marginEnd="16dp"/>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 

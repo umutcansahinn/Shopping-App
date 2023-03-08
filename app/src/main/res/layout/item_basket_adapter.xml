@@ -3,22 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/teal_200"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="20dp"
+    android:layout_margin="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/orange_500"
         android:layout_margin="4dp">
+
+        <ImageView
+            android:id="@+id/rounded_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/rounded_corner2"
+            android:layout_marginEnd="260dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
 
         <ImageView
             android:id="@+id/imageViewEntityImage"
             android:layout_width="100dp"
             android:layout_height="120dp"
+            android:layout_marginStart="16dp"
             android:src="@color/teal_200"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -26,6 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="category"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:layout_marginTop="4dp"
             app:layout_constraintLeft_toRightOf="@+id/imageViewEntityImage"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -35,6 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="price"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:layout_marginTop="4dp"
             app:layout_constraintLeft_toRightOf="@+id/imageViewEntityImage"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewEntityCategory"/>
@@ -44,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginTop="4dp"
             app:layout_constraintLeft_toRightOf="@id/imageViewEntityImage"
             app:layout_constraintTop_toBottomOf="@id/textViewEntityPrice"
             app:layout_constraintRight_toRightOf="parent">
@@ -52,6 +74,7 @@
                 android:id="@+id/imageViewMinus"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:background="@drawable/circle"
                 android:src="@drawable/baseline_remove_24"/>
 
             <TextView
@@ -59,13 +82,15 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:text="1"
-                android:textSize="18dp"
+                android:textSize="18sp"
+                android:textColor="@color/white"
                 android:gravity="center"/>
 
             <ImageView
                 android:id="@+id/imageViewPlus"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:background="@drawable/circle"
                 android:src="@drawable/baseline_add_24" />
 
         </LinearLayout>
@@ -73,11 +98,14 @@
         <ImageView
             android:id="@+id/imageViewDelete"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:src="@drawable/baseline_delete_24"
+            android:background="@drawable/circle2"
+            android:layout_margin="8dp"
             app:layout_constraintLeft_toRightOf="@id/imageViewEntityImage"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 
