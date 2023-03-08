@@ -6,12 +6,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BasketDao {
 
     @Query("SELECT * FROM basket ORDER BY id DESC")
-    suspend fun getAllBasketEntity(): List<BasketEntity>
+    fun getAllBasketEntity(): Flow<List<BasketEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBasketEntity(entity: BasketEntity)

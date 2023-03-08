@@ -5,6 +5,7 @@ import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.core.data.source.remote.api.ShoppingApi
 import com.example.shoppingapp.core.data.source.remote.model.ProductDto
 import com.example.shoppingapp.core.domain.repository.ShoppingRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ShoppingRepositoryImpl @Inject constructor(
@@ -33,7 +34,7 @@ class ShoppingRepositoryImpl @Inject constructor(
         basketDao.updateBasketEntity(entity = entity)
     }
 
-    override suspend fun getAllBasketEntity(): List<BasketEntity> {
+    override  fun getAllBasketEntity(): Flow<List<BasketEntity>> {
         return basketDao.getAllBasketEntity()
     }
 }

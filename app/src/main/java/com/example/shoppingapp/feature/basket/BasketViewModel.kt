@@ -8,6 +8,7 @@ import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.core.domain.use_case.UseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,17 +24,20 @@ class BasketViewModel @Inject constructor(
 
     fun getEntityFromRoom() {
         viewModelScope.launch {
-            useCases.getAllEntityUseCase().collectLatest{
-                when(it) {
-                    is Resource.Error->{
-                        _state.value = BasketState.Error(it.errorMessage)
+            when(useCases.getAllEntityUseCase()) {
+                is Resource.Error->{
+                    val message = (useCases.getAllEntityUseCase() as Resource.Error).errorMessage
+                    _state.value = BasketState.Error(message)
+                }
+                is Resource.Loading-> {
+                    _state.value = BasketState.Loading
+                }
+                is Resource.Success-> {
+                    (useCases.getAllEntityUseCase() as Resource.Success<Flow<List<BasketEntity>>>)
+                        .data.collectLatest {
+                            _state.value = BasketState.Success(it)
                     }
-                    is Resource.Loading-> {
-                        _state.value = BasketState.Loading
-                    }
-                    is Resource.Success-> {
-                        _state.value = BasketState.Success(it.data)
-                    }
+
                 }
             }
         }

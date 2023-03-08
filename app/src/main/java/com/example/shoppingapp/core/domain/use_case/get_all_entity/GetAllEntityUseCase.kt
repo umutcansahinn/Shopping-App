@@ -6,5 +6,5 @@ import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
 import kotlinx.coroutines.flow.Flow
 
 interface GetAllEntityUseCase {
-    operator fun invoke(): Flow<Resource<List<BasketEntity>>>
+    operator fun invoke(): Resource<Flow<List<BasketEntity>>>
 }

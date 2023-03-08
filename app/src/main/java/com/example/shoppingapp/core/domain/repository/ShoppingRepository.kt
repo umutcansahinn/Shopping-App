@@ -2,6 +2,7 @@ package com.example.shoppingapp.core.domain.repository
 
 import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.core.data.source.remote.model.ProductDto
+import kotlinx.coroutines.flow.Flow
 
 interface ShoppingRepository {
 
@@ -15,5 +16,5 @@ interface ShoppingRepository {
 
     suspend fun updateEntity(entity: BasketEntity)
 
-    suspend fun getAllBasketEntity(): List<BasketEntity>
+    fun getAllBasketEntity(): Flow<List<BasketEntity>>
 }
