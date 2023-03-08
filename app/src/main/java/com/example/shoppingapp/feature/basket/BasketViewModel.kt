@@ -55,4 +55,10 @@ class BasketViewModel @Inject constructor(
         }
     }
 
+    fun deleteAllEntityFromRoom() {
+        viewModelScope.launch {
+            useCases.deleteAllEntityUseCase()
+        }
+    }
+
 }

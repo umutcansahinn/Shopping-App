@@ -2,6 +2,7 @@ package com.example.shoppingapp.feature.basket
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,9 +13,9 @@ import com.example.shoppingapp.core.common.visible
 import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.databinding.FragmentBasketBinding
 import com.example.shoppingapp.feature.basket.adapter.BasketAdapter
-import com.example.shoppingapp.feature.home.adapter.ProductsAdapter
-import com.example.shoppingapp.feature.home_detail.HomeDetailViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.EventListener
 
 @AndroidEntryPoint
 class BasketFragment : Fragment(R.layout.fragment_basket) {
@@ -53,6 +54,8 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                 }
                 is BasketState.Success -> {
                     basketAdapter.basketList = it.entities
+                    basketUi(entities = it.entities)
+
                     with(binding) {
                         progressBar.gone()
                         textViewErrorMessage.gone()
@@ -70,7 +73,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
     private fun onMinusClickListener(entity: BasketEntity) {
         if (entity.itemCount == 1) {
-            viewModel.deleteEntityFromRoom(entity = entity)
+            onDeleteClickListener(entity = entity)
         } else {
             viewModel.updateEntityFromRoom(entity = entity.copy(itemCount = entity.itemCount-1))
         }
@@ -81,8 +84,29 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     }
 
     private fun onDeleteClickListener(entity: BasketEntity) {
-        viewModel.deleteEntityFromRoom(entity = entity)
+
+        val alert = MaterialAlertDialogBuilder(requireContext())
+        alert.setTitle("Uyarı")
+        alert.setMessage("Urunu silmek istediğinizden emin misiniz?")
+        alert.setPositiveButton("Evet") { _, _ ->
+            viewModel.deleteEntityFromRoom(entity = entity)
+        }
+        alert.setNegativeButton("Hayır") { _, _ ->
+        }
+        alert.show()
     }
 
+    private fun basketUi(entities: List<BasketEntity>) {
+        var totalAmount = 0f
+        entities.forEach {
+            totalAmount += it.itemCount.toFloat() * it.price.toFloat()
+        }
+        binding.textViewTotalAmount.text = "${totalAmount}$"
+
+        binding.buttonBuyNow.setOnClickListener {
+            Toast.makeText(requireContext(),"Siparisiniz Yola Cıkmıstır",Toast.LENGTH_SHORT).show()
+            viewModel.deleteAllEntityFromRoom()
+        }
+    }
 
 }

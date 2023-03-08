@@ -20,6 +20,9 @@ interface BasketDao {
     @Delete
     suspend fun deleteBasketEntity(entity: BasketEntity)
 
+    @Query("DELETE FROM basket")
+    suspend fun deleteAllBasketEntity()
+
     @Update
     suspend fun updateBasketEntity(entity: BasketEntity)
 }

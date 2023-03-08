@@ -3,6 +3,7 @@ package com.example.shoppingapp.feature.home_detail
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -73,6 +74,8 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
             textViewProductPrice.text = "${product.price}$"
 
             buttonAddToBag.setOnClickListener {
+                Toast.makeText(requireContext(),"added to Bag",Toast.LENGTH_SHORT).show()
+
                 viewModel.addEntityBasket(
                     entity = BasketEntity(
                         category = product.category,

@@ -1,5 +1,6 @@
 package com.example.shoppingapp.core.domain.use_case
 
+import com.example.shoppingapp.core.domain.use_case.delete_all_entity.DeleteAllEntityUseCaseImpl
 import com.example.shoppingapp.core.domain.use_case.delete_entity.DeleteEntityUseCaseImpl
 import com.example.shoppingapp.core.domain.use_case.gel_all_products.GetAllProductsUseCaseImpl
 import com.example.shoppingapp.core.domain.use_case.get_all_entity.GetAllEntityUseCaseImpl
@@ -13,5 +14,6 @@ data class UseCases(
     val insertEntityUseCase: InsertEntityUseCaseImpl,
     val deleteEntityUseCase: DeleteEntityUseCaseImpl,
     val getAllEntityUseCase: GetAllEntityUseCaseImpl,
-    val updateEntityUseCase: UpdateEntityUseCaseImpl
+    val updateEntityUseCase: UpdateEntityUseCaseImpl,
+    val deleteAllEntityUseCase: DeleteAllEntityUseCaseImpl
 )
