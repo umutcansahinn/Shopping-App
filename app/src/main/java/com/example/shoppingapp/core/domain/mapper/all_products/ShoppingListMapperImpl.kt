@@ -8,9 +8,7 @@ import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
 import javax.inject.Inject
 
 class ShoppingListMapperImpl @Inject
-constructor(
-
-) : ShoppingListMapper<ProductDto, ProductUiModel> {
+constructor() : ShoppingListMapper<ProductDto, ProductUiModel> {
 
     override fun map(input: List<ProductDto>?): List<ProductUiModel> {
         return input?.map {

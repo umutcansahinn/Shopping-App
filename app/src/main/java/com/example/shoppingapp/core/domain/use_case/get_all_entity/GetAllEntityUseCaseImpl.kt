@@ -11,13 +11,13 @@ import javax.inject.Inject
 
 class GetAllEntityUseCaseImpl @Inject constructor(
     private val shoppingRepository: ShoppingRepository
-) : GetAllEntityUseCase{
+) : GetAllEntityUseCase {
 
     override fun invoke(): Resource<Flow<List<BasketEntity>>> {
+       // Resource.Loading
         return try {
-            Resource.Loading
             Resource.Success(shoppingRepository.getAllBasketEntity())
-        }catch (e:Exception) {
+        } catch (e: Exception) {
             Resource.Error(e.localizedMessage.orEmpty())
         }
     }

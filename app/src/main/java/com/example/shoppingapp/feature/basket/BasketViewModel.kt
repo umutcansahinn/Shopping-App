@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BasketViewModel @Inject constructor(
     private val useCases: UseCases
-): ViewModel() {
+) : ViewModel() {
 
 
     private val _state = MutableLiveData<BasketState>()
@@ -24,40 +24,57 @@ class BasketViewModel @Inject constructor(
 
     fun getEntityFromRoom() {
         viewModelScope.launch {
-            when(useCases.getAllEntityUseCase()) {
-                is Resource.Error->{
+              when (val result = useCases.getAllEntityUseCase()) {
+                  is Resource.Error -> {
+                      _state.value = BasketState.Error(result.errorMessage)
+                  }
+                  is Resource.Loading -> {
+                      _state.value = BasketState.Loading
+                  }
+                  is Resource.Success -> {
+                      result.data.collect {
+                        _state.value =  BasketState.Success(it)
+                      }
+
+
+                  }
+              }
+          /*  when (useCases.getAllEntityUseCase()) {
+                is Resource.Error -> {
                     val message = (useCases.getAllEntityUseCase() as Resource.Error).errorMessage
                     _state.value = BasketState.Error(message)
                 }
-                is Resource.Loading-> {
+                is Resource.Loading -> {
                     _state.value = BasketState.Loading
                 }
-                is Resource.Success-> {
+                is Resource.Success -> {
                     (useCases.getAllEntityUseCase() as Resource.Success<Flow<List<BasketEntity>>>)
                         .data.collectLatest {
                             _state.value = BasketState.Success(it)
-                    }
-
+                        }
                 }
-            }
+            }*/
         }
     }
 
     fun deleteEntityFromRoom(entity: BasketEntity) {
         viewModelScope.launch {
             useCases.deleteEntityUseCase.invoke(entity = entity)
+           // getEntityFromRoom()
         }
     }
 
     fun updateEntityFromRoom(entity: BasketEntity) {
         viewModelScope.launch {
             useCases.updateEntityUseCase(entity = entity)
+            //getEntityFromRoom()
         }
     }
 
     fun deleteAllEntityFromRoom() {
         viewModelScope.launch {
             useCases.deleteAllEntityUseCase()
+           // getEntityFromRoom()
         }
     }
 
