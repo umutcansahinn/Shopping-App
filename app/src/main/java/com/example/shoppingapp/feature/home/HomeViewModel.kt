@@ -1,38 +1,28 @@
 package com.example.shoppingapp.feature.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoppingapp.core.common.Resource
-import com.example.shoppingapp.core.domain.use_case.UseCases
+import com.example.shoppingapp.core.domain.domain_model.DomainModel
+import com.example.shoppingapp.core.domain.use_case.gel_all_products.GetAllProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCases: UseCases
-): ViewModel() {
+    private val getAllProductsUseCase: GetAllProductsUseCase
+) : ViewModel() {
 
-    private val _state = MutableLiveData<AllProductsState>()
-    val state: LiveData<AllProductsState> = _state
-
+    private val _state = MutableStateFlow<Resource<List<DomainModel>>>(Resource.Loading)
+    val state get() = _state.asStateFlow()
 
     fun getAllProducts() {
         viewModelScope.launch {
-            useCases.getAllProductsUseCase().collect { result ->
-                when(result) {
-                    is Resource.Success -> {
-                        _state.value = AllProductsState.Success(products = result.data)
-                    }
-                    is Resource.Loading -> {
-                        _state.value = AllProductsState.Loading
-                    }
-                    is Resource.Error -> {
-                        _state.value = AllProductsState.Error(error = result.errorMessage)
-                    }
-                }
+            getAllProductsUseCase().collect {
+                _state.value = it
             }
         }
     }

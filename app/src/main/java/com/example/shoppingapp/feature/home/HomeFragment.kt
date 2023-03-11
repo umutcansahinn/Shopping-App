@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shoppingapp.R
+import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.common.gone
 import com.example.shoppingapp.core.common.viewBinding
 import com.example.shoppingapp.core.common.visible
 import com.example.shoppingapp.databinding.FragmentHomeBinding
 import com.example.shoppingapp.feature.home.adapter.ProductsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
+
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val viewModel by viewModels<HomeViewModel>()
     private val productsAdapter = ProductsAdapter(::itemSetClick)
@@ -28,28 +34,35 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observe() {
-        viewModel.state.observe(viewLifecycleOwner) {
-            when(it) {
-                is AllProductsState.Loading-> {
-                    with(binding) {
-                        progressBar.visible()
-                        textViewErrorMessage.gone()
-                        recyclerView.gone()
-                    }
-                }
-                is AllProductsState.Error-> {
-                    with(binding) {
-                        progressBar.gone()
-                        textViewErrorMessage.visible()
-                        recyclerView.gone()
-                    }
-                }
-                is AllProductsState.Success-> {
-                    productsAdapter.productsList = it.products
-                    with(binding) {
-                        progressBar.gone()
-                        textViewErrorMessage.gone()
-                        recyclerView.visible()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            with(binding) {
+                                progressBar.visible()
+                                textViewErrorMessage.gone()
+                                recyclerView.gone()
+                            }
+                        }
+                        is Resource.Error -> {
+                            with(binding) {
+                                textViewErrorMessage.text = it.errorMessage
+
+                                progressBar.gone()
+                                textViewErrorMessage.visible()
+                                recyclerView.gone()
+                            }
+                        }
+                        is Resource.Success -> {
+                            productsAdapter.productsList = it.data
+
+                            with(binding) {
+                                progressBar.gone()
+                                textViewErrorMessage.gone()
+                                recyclerView.visible()
+                            }
+                        }
                     }
                 }
             }
@@ -58,8 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun initView() {
         binding.recyclerView.adapter = productsAdapter
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(),2)
-        //binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
     private fun itemSetClick(id: Int) {

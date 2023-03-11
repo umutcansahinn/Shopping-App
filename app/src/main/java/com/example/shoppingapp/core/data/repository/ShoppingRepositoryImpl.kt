@@ -33,11 +33,12 @@ class ShoppingRepositoryImpl @Inject constructor(
     override suspend fun deleteAllEntity() {
         basketDao.deleteAllBasketEntity()
     }
+
     override suspend fun updateEntity(entity: BasketEntity) {
         basketDao.updateBasketEntity(entity = entity)
     }
 
-    override  fun getAllBasketEntity(): Flow<List<BasketEntity>> {
+    override fun getAllBasketEntity(): Flow<List<BasketEntity>> {
         return basketDao.getAllBasketEntity()
     }
 }

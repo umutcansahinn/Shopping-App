@@ -7,25 +7,25 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingapp.core.common.loadImage
-import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
+import com.example.shoppingapp.core.domain.domain_model.DomainModel
 import com.example.shoppingapp.databinding.ItemProductsAdapterBinding
 
 class ProductsAdapter(private val itemClickListener:((Int)-> Unit)) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemProductsAdapterBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val differCallback = object : DiffUtil.ItemCallback<ProductUiModel>() {
-        override fun areItemsTheSame(oldItem: ProductUiModel, newItem: ProductUiModel): Boolean {
+    private val differCallback = object : DiffUtil.ItemCallback<DomainModel>() {
+        override fun areItemsTheSame(oldItem: DomainModel, newItem: DomainModel): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ProductUiModel, newItem: ProductUiModel): Boolean {
+        override fun areContentsTheSame(oldItem: DomainModel, newItem: DomainModel): Boolean {
             return oldItem == newItem
         }
     }
     private val differ = AsyncListDiffer(this, differCallback)
 
-    var productsList: List<ProductUiModel>
+    var productsList: List<DomainModel>
         get() = differ.currentList
         set(value) = differ.submitList(value)
 

@@ -10,6 +10,7 @@ interface ShoppingRepository {
 
     suspend fun getProductById(id: Int): ProductDto
 
+
     suspend fun insertEntity(entity: BasketEntity)
 
     suspend fun deleteEntity(entity: BasketEntity)

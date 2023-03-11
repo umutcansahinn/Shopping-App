@@ -1,81 +1,52 @@
 package com.example.shoppingapp.feature.basket
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.data.source.local.BasketEntity
-import com.example.shoppingapp.core.domain.use_case.UseCases
+import com.example.shoppingapp.core.domain.use_case.delete_all_entity.DeleteAllEntityUseCase
+import com.example.shoppingapp.core.domain.use_case.delete_entity.DeleteEntityUseCase
+import com.example.shoppingapp.core.domain.use_case.get_all_entity.GetAllEntityUseCase
+import com.example.shoppingapp.core.domain.use_case.update_entity.UpdateEntityUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BasketViewModel @Inject constructor(
-    private val useCases: UseCases
+    private val getAllEntityUseCase: GetAllEntityUseCase,
+    private val deleteEntityUseCase: DeleteEntityUseCase,
+    private val updateEntityUseCase: UpdateEntityUseCase,
+    private val deleteAllEntityUseCase: DeleteAllEntityUseCase
 ) : ViewModel() {
 
-
-    private val _state = MutableLiveData<BasketState>()
-    val state: LiveData<BasketState> = _state
+    private val _state = MutableStateFlow<Resource<Flow<List<BasketEntity>>>>(Resource.Loading)
+    val state get() = _state.asStateFlow()
 
     fun getEntityFromRoom() {
         viewModelScope.launch {
-              when (val result = useCases.getAllEntityUseCase()) {
-                  is Resource.Error -> {
-                      _state.value = BasketState.Error(result.errorMessage)
-                  }
-                  is Resource.Loading -> {
-                      _state.value = BasketState.Loading
-                  }
-                  is Resource.Success -> {
-                      result.data.collect {
-                        _state.value =  BasketState.Success(it)
-                      }
-
-
-                  }
-              }
-          /*  when (useCases.getAllEntityUseCase()) {
-                is Resource.Error -> {
-                    val message = (useCases.getAllEntityUseCase() as Resource.Error).errorMessage
-                    _state.value = BasketState.Error(message)
-                }
-                is Resource.Loading -> {
-                    _state.value = BasketState.Loading
-                }
-                is Resource.Success -> {
-                    (useCases.getAllEntityUseCase() as Resource.Success<Flow<List<BasketEntity>>>)
-                        .data.collectLatest {
-                            _state.value = BasketState.Success(it)
-                        }
-                }
-            }*/
+              _state.value = getAllEntityUseCase()
         }
     }
 
     fun deleteEntityFromRoom(entity: BasketEntity) {
         viewModelScope.launch {
-            useCases.deleteEntityUseCase.invoke(entity = entity)
-           // getEntityFromRoom()
+            deleteEntityUseCase.invoke(entity = entity)
         }
     }
 
     fun updateEntityFromRoom(entity: BasketEntity) {
         viewModelScope.launch {
-            useCases.updateEntityUseCase(entity = entity)
-            //getEntityFromRoom()
+            updateEntityUseCase(entity = entity)
         }
     }
 
     fun deleteAllEntityFromRoom() {
         viewModelScope.launch {
-            useCases.deleteAllEntityUseCase()
-           // getEntityFromRoom()
+            deleteAllEntityUseCase()
         }
     }
-
 }

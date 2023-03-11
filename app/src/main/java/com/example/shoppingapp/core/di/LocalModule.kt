@@ -1,7 +1,6 @@
 package com.example.shoppingapp.core.di
 
 import android.content.Context
-import androidx.room.Insert
 import androidx.room.Room
 import com.example.shoppingapp.core.data.source.local.BasketDao
 import com.example.shoppingapp.core.data.source.local.BasketDatabase

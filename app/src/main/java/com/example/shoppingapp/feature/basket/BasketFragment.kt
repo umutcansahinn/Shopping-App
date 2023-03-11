@@ -5,8 +5,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppingapp.R
+import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.common.gone
 import com.example.shoppingapp.core.common.viewBinding
 import com.example.shoppingapp.core.common.visible
@@ -15,10 +19,11 @@ import com.example.shoppingapp.databinding.FragmentBasketBinding
 import com.example.shoppingapp.feature.basket.adapter.BasketAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.EventListener
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class BasketFragment : Fragment(R.layout.fragment_basket) {
+
     private val binding by viewBinding(FragmentBasketBinding::bind)
     private val viewModel by viewModels<BasketViewModel>()
     private val basketAdapter = BasketAdapter(
@@ -26,7 +31,6 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         onMinusClickListener = ::onMinusClickListener,
         onPlusClickListener = ::onPlusClickListener
     )
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,30 +40,37 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     }
 
     private fun observe() {
-        viewModel.state.observe(viewLifecycleOwner) {
-            when (it) {
-                is BasketState.Loading -> {
-                    with(binding) {
-                        progressBar.visible()
-                        textViewErrorMessage.gone()
-                        recyclerView.gone()
-                    }
-                }
-                is BasketState.Error -> {
-                    with(binding) {
-                        progressBar.gone()
-                        textViewErrorMessage.visible()
-                        recyclerView.gone()
-                    }
-                }
-                is BasketState.Success -> {
-                    basketAdapter.basketList = it.entities
-                    basketUi(entities = it.entities)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect{
+                    when (it) {
+                        is Resource.Loading -> {
+                            with(binding) {
+                                progressBar.visible()
+                                textViewErrorMessage.gone()
+                                recyclerView.gone()
+                            }
+                        }
+                        is Resource.Error -> {
+                            with(binding) {
+                                textViewErrorMessage.text = it.errorMessage
+                                progressBar.gone()
+                                textViewErrorMessage.visible()
+                                recyclerView.gone()
+                            }
+                        }
+                        is Resource.Success -> {
+                            it.data.collect { list ->
+                                basketAdapter.basketList = list
+                                basketUi(entities = list)
 
-                    with(binding) {
-                        progressBar.gone()
-                        textViewErrorMessage.gone()
-                        recyclerView.visible()
+                                with(binding) {
+                                    progressBar.gone()
+                                    textViewErrorMessage.gone()
+                                    recyclerView.visible()
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -75,12 +86,12 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         if (entity.itemCount == 1) {
             onDeleteClickListener(entity = entity)
         } else {
-            viewModel.updateEntityFromRoom(entity = entity.copy(itemCount = entity.itemCount-1))
+            viewModel.updateEntityFromRoom(entity = entity.copy(itemCount = entity.itemCount - 1))
         }
     }
 
     private fun onPlusClickListener(entity: BasketEntity) {
-        viewModel.updateEntityFromRoom(entity = entity.copy(itemCount = entity.itemCount+1))
+        viewModel.updateEntityFromRoom(entity = entity.copy(itemCount = entity.itemCount + 1))
     }
 
     private fun onDeleteClickListener(entity: BasketEntity) {
@@ -104,7 +115,8 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         binding.textViewTotalAmount.text = "${totalAmount}$"
 
         binding.buttonBuyNow.setOnClickListener {
-            Toast.makeText(requireContext(),"Siparisiniz Yola Cıkmıstır",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Siparisiniz Yola Cıkmıstır", Toast.LENGTH_SHORT)
+                .show()
             viewModel.deleteAllEntityFromRoom()
         }
     }

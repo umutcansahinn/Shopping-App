@@ -1,45 +1,38 @@
 package com.example.shoppingapp.feature.home_detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.data.source.local.BasketEntity
-import com.example.shoppingapp.core.domain.use_case.UseCases
+import com.example.shoppingapp.core.domain.domain_model.DomainModel
+import com.example.shoppingapp.core.domain.use_case.insert_entity.InsertEntityUseCase
+import com.example.shoppingapp.core.domain.use_case.single_product.GetSingleProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeDetailViewModel @Inject constructor(
-    private val useCases: UseCases
-): ViewModel() {
+    private val getSingleProductUseCase: GetSingleProductUseCase,
+    private val insertEntityUseCase: InsertEntityUseCase
+) : ViewModel() {
 
-    private val _state = MutableLiveData<SingleProductState>()
-    val state: LiveData<SingleProductState> = _state
+    private val _state = MutableStateFlow<Resource<DomainModel>>(Resource.Loading)
+    val state get() = _state.asStateFlow()
 
     fun getSingleProduct(id: Int) {
         viewModelScope.launch {
-            useCases.getSingleProductUseCase(id = id).collect {result->
-                when(result) {
-                    is Resource.Success -> {
-                        _state.value = SingleProductState.Success(products = result.data)
-                    }
-                    is Resource.Loading -> {
-                        _state.value = SingleProductState.Loading
-                    }
-                    is Resource.Error -> {
-                        _state.value = SingleProductState.Error(error = result.errorMessage)
-                    }
-                }
+            getSingleProductUseCase(id = id).collect { result ->
+                _state.value = result
             }
         }
     }
 
     fun addEntityBasket(entity: BasketEntity) {
         viewModelScope.launch {
-            useCases.insertEntityUseCase(entity = entity)
+            insertEntityUseCase(entity = entity)
         }
     }
 }

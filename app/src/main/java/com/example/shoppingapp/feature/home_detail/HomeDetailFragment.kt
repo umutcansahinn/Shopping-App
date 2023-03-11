@@ -6,16 +6,21 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.shoppingapp.R
+import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.common.loadImage
 import com.example.shoppingapp.core.common.viewBinding
 import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.core.data.source.local.RatingEntity
-import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
+import com.example.shoppingapp.core.domain.domain_model.DomainModel
 import com.example.shoppingapp.databinding.FragmentHomeDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
@@ -31,21 +36,24 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
     }
 
     private fun observe() {
-        viewModel.state.observe(viewLifecycleOwner) {
-            when (it) {
-                is SingleProductState.Loading -> {
-                    with(binding) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            with(binding) {
 
-                    }
-                }
-                is SingleProductState.Error -> {
-                    with(binding) {
-                    }
-                }
-                is SingleProductState.Success -> {
-                    singleProductData(product = it.products)
-                    with(binding) {
-
+                            }
+                        }
+                        is Resource.Error -> {
+                            with(binding) {
+                            }
+                        }
+                        is Resource.Success -> {
+                            singleProductData(product = it.data)
+                            with(binding) {
+                            }
+                        }
                     }
                 }
             }
@@ -59,6 +67,7 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
         popBackStackEvent()
 
     }
+
     private fun popBackStackEvent() {
         binding.imageButtonBack.setOnClickListener {
             findNavController().popBackStack()
@@ -66,7 +75,7 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun singleProductData(product: ProductUiModel) {
+    private fun singleProductData(product: DomainModel) {
         with(binding) {
             imageViewProductImage.loadImage(product.image)
             textViewProductCategoryName.text = product.category
@@ -74,7 +83,7 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
             textViewProductPrice.text = "${product.price}$"
 
             buttonAddToBag.setOnClickListener {
-                Toast.makeText(requireContext(),"added to Bag",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "added to Bag", Toast.LENGTH_SHORT).show()
 
                 viewModel.addEntityBasket(
                     entity = BasketEntity(
@@ -86,7 +95,7 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
                         rating = RatingEntity(
                             count = product.rating.count,
                             rate = product.rating.rate
-                        ) ,
+                        ),
                         title = product.title
                     )
                 )

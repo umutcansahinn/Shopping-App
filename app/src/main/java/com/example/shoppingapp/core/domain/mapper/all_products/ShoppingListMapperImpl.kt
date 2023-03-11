@@ -4,15 +4,15 @@ import com.example.shoppingapp.core.common.orZero
 import com.example.shoppingapp.core.data.source.remote.model.ProductDto
 import com.example.shoppingapp.core.data.source.remote.model.Rating
 import com.example.shoppingapp.core.domain.mapper.ShoppingListMapper
-import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
+import com.example.shoppingapp.core.domain.domain_model.DomainModel
 import javax.inject.Inject
 
 class ShoppingListMapperImpl @Inject
-constructor() : ShoppingListMapper<ProductDto, ProductUiModel> {
+constructor() : ShoppingListMapper<ProductDto, DomainModel> {
 
-    override fun map(input: List<ProductDto>?): List<ProductUiModel> {
+    override fun map(input: List<ProductDto>?): List<DomainModel> {
         return input?.map {
-            ProductUiModel(
+            DomainModel(
                 category = it.category.orEmpty(),
                 description = it.description.orEmpty(),
                 id = it.id.orZero(),

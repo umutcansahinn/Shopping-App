@@ -5,7 +5,7 @@ import com.example.shoppingapp.core.domain.mapper.ShoppingListMapper
 import com.example.shoppingapp.core.domain.mapper.ShoppingMapper
 import com.example.shoppingapp.core.domain.mapper.all_products.ShoppingListMapperImpl
 import com.example.shoppingapp.core.domain.mapper.single_product.ShoppingMapperImpl
-import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
+import com.example.shoppingapp.core.domain.domain_model.DomainModel
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,11 +18,11 @@ abstract class MapperModule {
     @Binds
     abstract fun bindShoppingListMapper(
         shoppingListMapperImpl: ShoppingListMapperImpl
-    ): ShoppingListMapper<ProductDto, ProductUiModel>
+    ): ShoppingListMapper<ProductDto, DomainModel>
 
 
     @Binds
     abstract fun bindShoppingMapper(
         shoppingMapperImpl: ShoppingMapperImpl
-    ): ShoppingMapper<ProductDto,ProductUiModel>
+    ): ShoppingMapper<ProductDto,DomainModel>
 }

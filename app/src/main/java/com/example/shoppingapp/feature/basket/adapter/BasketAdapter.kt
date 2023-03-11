@@ -1,6 +1,5 @@
 package com.example.shoppingapp.feature.basket.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -8,9 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingapp.core.common.loadImage
 import com.example.shoppingapp.core.data.source.local.BasketEntity
-import com.example.shoppingapp.core.domain.modelUi.ProductUiModel
 import com.example.shoppingapp.databinding.ItemBasketAdapterBinding
-import com.example.shoppingapp.databinding.ItemProductsAdapterBinding
 
 class BasketAdapter(
     private val onPlusClickListener: (BasketEntity)-> Unit,
