@@ -1,7 +1,14 @@
 buildscript {
+    ext {
+        nav_version = "2.5.3"
+        hilt_version = '2.44.2'
+        retrofit_version = "2.9.0"
+        gson_version = "2.10"
+        glide_version = "4.14.2"
+        room_version = "2.5.0"
+        lottieVersion = "5.2.0"
+    }
     dependencies {
-        def nav_version = "2.5.3"
-        def hilt_version = '2.44.2'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }

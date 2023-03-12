@@ -10,9 +10,8 @@ import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.databinding.ItemBasketAdapterBinding
 
 class BasketAdapter(
-    private val onPlusClickListener: (BasketEntity)-> Unit,
-    private val onMinusClickListener: (BasketEntity)-> Unit,
-    private val onDeleteClickListener: (BasketEntity)-> Unit
+    private val onDeleteClickListener: (BasketEntity)-> Unit,
+    private val onPlusOrMinusClickListener: (BasketEntity,isPlus: Boolean)-> Unit
 ) : RecyclerView.Adapter<BasketAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemBasketAdapterBinding) :
@@ -54,14 +53,14 @@ class BasketAdapter(
             textViewEntityPrice.text = "${basketList[position].price}$"
             textViewEntityCount.text = basketList[position].itemCount.toString()
 
-            imageViewMinus.setOnClickListener {
-                onMinusClickListener(basketList[position])
-            }
-            imageViewPlus.setOnClickListener {
-                onPlusClickListener(basketList[position])
-            }
             imageViewDelete.setOnClickListener {
                 onDeleteClickListener(basketList[position])
+            }
+            imageViewMinus.setOnClickListener {
+                onPlusOrMinusClickListener(basketList[position], false)
+            }
+            imageViewPlus.setOnClickListener {
+                onPlusOrMinusClickListener(basketList[position],true)
             }
         }
     }

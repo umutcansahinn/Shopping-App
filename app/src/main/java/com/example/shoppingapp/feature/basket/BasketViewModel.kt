@@ -38,9 +38,17 @@ class BasketViewModel @Inject constructor(
         }
     }
 
-    fun updateEntityFromRoom(entity: BasketEntity) {
+    fun updateEntityFromRoom(entity: BasketEntity,isPlus: Boolean) {
         viewModelScope.launch {
-            updateEntityUseCase(entity = entity)
+            if (isPlus) {
+                updateEntityUseCase(entity = entity.copy(itemCount = entity.itemCount +1))
+            }else {
+                if (entity.itemCount == 1) {
+                    deleteEntityFromRoom(entity = entity)
+                } else {
+                    updateEntityUseCase(entity = entity.copy(itemCount = entity.itemCount -1))
+                }
+            }
         }
     }
 

@@ -29,8 +29,12 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView,navController)
 
         navHostFragment.navController.addOnDestinationChangedListener { _,destination,_->
+
             when(destination.id) {
-                R.id.homeDetailFragment-> binding.navView.gone()
+                R.id.homeDetailFragment,
+                R.id.splashFragment,
+                R.id.onBoardingFragment -> binding.navView.gone()
+
                 else -> binding.navView.visible()
             }
         }

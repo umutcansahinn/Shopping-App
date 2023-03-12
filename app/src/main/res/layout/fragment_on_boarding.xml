@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature.on_boarding.OnBoardingFragment">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:dotsColor="@color/dark_gray"
+        app:dotsCornerRadius="8dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="4dp"
+        app:dotsWidthFactor="2.5"
+        app:selectedDotColor="@color/orange_500"
+        app:progressMode="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="100dp"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

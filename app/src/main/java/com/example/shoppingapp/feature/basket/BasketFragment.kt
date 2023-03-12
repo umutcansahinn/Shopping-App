@@ -28,8 +28,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private val viewModel by viewModels<BasketViewModel>()
     private val basketAdapter = BasketAdapter(
         onDeleteClickListener = ::onDeleteClickListener,
-        onMinusClickListener = ::onMinusClickListener,
-        onPlusClickListener = ::onPlusClickListener
+        onPlusOrMinusClickListener = ::onPlusOrMinusClickListener
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     private fun observe() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect{
+                viewModel.state.collect {
                     when (it) {
                         is Resource.Loading -> {
                             with(binding) {
@@ -82,29 +81,12 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun onMinusClickListener(entity: BasketEntity) {
-        if (entity.itemCount == 1) {
-            onDeleteClickListener(entity = entity)
-        } else {
-            viewModel.updateEntityFromRoom(entity = entity.copy(itemCount = entity.itemCount - 1))
-        }
-    }
-
-    private fun onPlusClickListener(entity: BasketEntity) {
-        viewModel.updateEntityFromRoom(entity = entity.copy(itemCount = entity.itemCount + 1))
+    private fun onPlusOrMinusClickListener(entity: BasketEntity, isPlus: Boolean) {
+        viewModel.updateEntityFromRoom(entity = entity, isPlus = isPlus)
     }
 
     private fun onDeleteClickListener(entity: BasketEntity) {
-
-        val alert = MaterialAlertDialogBuilder(requireContext())
-        alert.setTitle("Uyarı")
-        alert.setMessage("Urunu silmek istediğinizden emin misiniz?")
-        alert.setPositiveButton("Evet") { _, _ ->
-            viewModel.deleteEntityFromRoom(entity = entity)
-        }
-        alert.setNegativeButton("Hayır") { _, _ ->
-        }
-        alert.show()
+        viewModel.deleteEntityFromRoom(entity = entity)
     }
 
     private fun basketUi(entities: List<BasketEntity>) {
@@ -120,5 +102,4 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
             viewModel.deleteAllEntityFromRoom()
         }
     }
-
 }
