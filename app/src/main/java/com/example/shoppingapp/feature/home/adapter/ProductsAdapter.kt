@@ -10,7 +10,8 @@ import com.example.shoppingapp.core.common.loadImage
 import com.example.shoppingapp.core.domain.domain_model.DomainModel
 import com.example.shoppingapp.databinding.ItemProductsAdapterBinding
 
-class ProductsAdapter(private val itemClickListener:((Int)-> Unit)) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
+class ProductsAdapter(private val itemClickListener: ((Int) -> Unit)) :
+    RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
     class ViewHolder(val binding: ItemProductsAdapterBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -43,7 +44,6 @@ class ProductsAdapter(private val itemClickListener:((Int)-> Unit)) : RecyclerVi
         return productsList.size
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             imageViewProductImage.loadImage(productsList[position].image)

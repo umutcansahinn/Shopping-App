@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/navigation_splash">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -11,23 +11,22 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_home_to_homeDetailFragment"
-            app:destination="@id/homeDetailFragment" />
+            android:id="@+id/action_navigation_home_to_navigation_home_detail"
+            app:destination="@id/navigation_home_detail" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_basket"
         android:name="com.example.shoppingapp.feature.basket.BasketFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_basket" />
+        android:label="@string/title_basket"
+        tools:layout="@layout/fragment_basket" >
+        <action
+            android:id="@+id/action_navigation_basket_to_navigation_payment"
+            app:destination="@id/navigation_payment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.shoppingapp.feature.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
-        android:id="@+id/homeDetailFragment"
+        android:id="@+id/navigation_home_detail"
         android:name="com.example.shoppingapp.feature.home_detail.HomeDetailFragment"
         android:label="fragment_home_detail"
         tools:layout="@layout/fragment_home_detail" >
@@ -36,32 +35,33 @@
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/splashFragment"
+        android:id="@+id/navigation_splash"
         android:name="com.example.shoppingapp.feature.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_navigation_home"
             app:destination="@id/navigation_home"
-            app:popUpTo="@id/splashFragment"
+            app:popUpTo="@id/navigation_splash"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_splashFragment_to_onBoardingFragment"
-            app:destination="@id/onBoardingFragment"
-            app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_navigation_splash_to_navigation_on_boarding"
+            app:destination="@id/navigation_on_boarding" />
 
     </fragment>
     <fragment
-        android:id="@+id/onBoardingFragment"
+        android:id="@+id/navigation_on_boarding"
         android:name="com.example.shoppingapp.feature.on_boarding.OnBoardingFragment"
         android:label="fragment_on_boarding"
         tools:layout="@layout/fragment_on_boarding" >
         <action
-            android:id="@+id/action_onBoardingFragment_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:popUpTo="@id/onBoardingFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_navigation_on_boarding_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_payment"
+        android:name="com.example.shoppingapp.feature.payment.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" />
 
 </navigation>

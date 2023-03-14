@@ -22,14 +22,14 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             if (onBoardingIsFinished()) {
                 findNavController().navigate(R.id.action_splashFragment_to_navigation_home)
             } else {
-                findNavController().navigate(R.id.action_splashFragment_to_onBoardingFragment)
+                findNavController().navigate(R.id.action_navigation_splash_to_navigation_on_boarding)
             }
         }
     }
 
     private fun onBoardingIsFinished(): Boolean {
         val sharedPreferences =
-            requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
-        return sharedPreferences.getBoolean("finished", false)
+            requireActivity().getSharedPreferences(getString(R.string.on_boarding), Context.MODE_PRIVATE)
+        return sharedPreferences.getBoolean(getString(R.string.finished), false)
     }
 }

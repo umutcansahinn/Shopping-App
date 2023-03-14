@@ -19,16 +19,16 @@ class ThirdFragment : Fragment(R.layout.fragment_third) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.textViewNext.setOnClickListener {
-            findNavController().navigate(R.id.action_onBoardingFragment_to_navigation_home)
+            findNavController().navigate(R.id.action_navigation_on_boarding_to_navigation_home)
             onBoardingIsFinished()
         }
     }
 
     private fun onBoardingIsFinished() {
         val sharedPreferences =
-            requireActivity().getSharedPreferences("onBoarding", Context.MODE_PRIVATE)
+            requireActivity().getSharedPreferences(getString(R.string.on_boarding), Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putBoolean("finished", true)
+        editor.putBoolean(getString(R.string.finished), true)
         editor.apply()
     }
 }

@@ -75,7 +75,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun itemSetClick(id: Int) {
-        val action = HomeFragmentDirections.actionNavigationHomeToHomeDetailFragment(id = id)
+        val action = HomeFragmentDirections.actionNavigationHomeToNavigationHomeDetail(id = id)
         findNavController().navigate(action)
     }
 }

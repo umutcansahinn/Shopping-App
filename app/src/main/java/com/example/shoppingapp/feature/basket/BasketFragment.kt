@@ -2,12 +2,12 @@ package com.example.shoppingapp.feature.basket
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppingapp.R
 import com.example.shoppingapp.core.common.Resource
@@ -17,7 +17,6 @@ import com.example.shoppingapp.core.common.visible
 import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.databinding.FragmentBasketBinding
 import com.example.shoppingapp.feature.basket.adapter.BasketAdapter
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -48,6 +47,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                                 progressBar.visible()
                                 textViewErrorMessage.gone()
                                 recyclerView.gone()
+                                emptyListView.gone()
                             }
                         }
                         is Resource.Error -> {
@@ -56,18 +56,31 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                                 progressBar.gone()
                                 textViewErrorMessage.visible()
                                 recyclerView.gone()
+                                emptyListView.gone()
                             }
                         }
                         is Resource.Success -> {
                             it.data.collect { list ->
-                                basketAdapter.basketList = list
-                                basketUi(entities = list)
+                                if (list.isNotEmpty()) {
+                                    basketAdapter.basketList = list
+                                    basketUi(entities = list)
 
-                                with(binding) {
-                                    progressBar.gone()
-                                    textViewErrorMessage.gone()
-                                    recyclerView.visible()
+                                    with(binding) {
+                                        progressBar.gone()
+                                        textViewErrorMessage.gone()
+                                        emptyListView.gone()
+                                        recyclerView.visible()
+                                    }
+                                } else {
+                                    with(binding) {
+                                        emptyListView.visible()
+
+                                        progressBar.gone()
+                                        textViewErrorMessage.gone()
+                                        recyclerView.gone()
+                                    }
                                 }
+
                             }
                         }
                     }
@@ -89,17 +102,17 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
         viewModel.deleteEntityFromRoom(entity = entity)
     }
 
+
     private fun basketUi(entities: List<BasketEntity>) {
         var totalAmount = 0f
         entities.forEach {
             totalAmount += it.itemCount.toFloat() * it.price.toFloat()
         }
         binding.textViewTotalAmount.text = "${totalAmount}$"
-
         binding.buttonBuyNow.setOnClickListener {
-            Toast.makeText(requireContext(), "Siparisiniz Yola Cıkmıstır", Toast.LENGTH_SHORT)
-                .show()
-            viewModel.deleteAllEntityFromRoom()
+            if (entities.isNotEmpty()) {
+                findNavController().navigate(R.id.action_navigation_basket_to_navigation_payment)
+            }
         }
     }
 }

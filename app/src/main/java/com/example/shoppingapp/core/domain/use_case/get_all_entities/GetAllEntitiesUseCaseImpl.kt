@@ -1,4 +1,4 @@
-package com.example.shoppingapp.core.domain.use_case.get_all_entity
+package com.example.shoppingapp.core.domain.use_case.get_all_entities
 
 import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.data.source.local.BasketEntity
@@ -6,14 +6,14 @@ import com.example.shoppingapp.core.domain.repository.ShoppingRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAllEntityUseCaseImpl @Inject constructor(
+class GetAllEntitiesUseCaseImpl @Inject constructor(
     private val shoppingRepository: ShoppingRepository
-) : GetAllEntityUseCase {
+) : GetAllEntitiesUseCase {
 
     override fun invoke(): Resource<Flow<List<BasketEntity>>> {
         Resource.Loading
         return try {
-            Resource.Success(shoppingRepository.getAllBasketEntity())
+            Resource.Success(shoppingRepository.getAllBasketEntities())
         } catch (e: Exception) {
             Resource.Error(e.localizedMessage.orEmpty())
         }

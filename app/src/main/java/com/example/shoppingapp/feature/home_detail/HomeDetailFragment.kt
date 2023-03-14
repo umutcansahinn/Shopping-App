@@ -1,6 +1,5 @@
 package com.example.shoppingapp.feature.home_detail
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -41,18 +40,14 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
                 viewModel.state.collect {
                     when (it) {
                         is Resource.Loading -> {
-                            with(binding) {
-
-                            }
+                            with(binding) {}
                         }
                         is Resource.Error -> {
-                            with(binding) {
-                            }
+                            with(binding) {}
                         }
                         is Resource.Success -> {
                             singleProductData(product = it.data)
-                            with(binding) {
-                            }
+                            with(binding) {}
                         }
                     }
                 }
@@ -74,7 +69,7 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+
     private fun singleProductData(product: DomainModel) {
         with(binding) {
             imageViewProductImage.loadImage(product.image)
@@ -83,9 +78,13 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
             textViewProductPrice.text = "${product.price}$"
 
             buttonAddToBag.setOnClickListener {
-                Toast.makeText(requireContext(), "added to Bag", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.added_basket),
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                viewModel.addEntityBasket(
+                viewModel.insertEntity(
                     entity = BasketEntity(
                         category = product.category,
                         description = product.description,

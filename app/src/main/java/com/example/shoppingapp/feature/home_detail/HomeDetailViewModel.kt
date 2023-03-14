@@ -30,7 +30,7 @@ class HomeDetailViewModel @Inject constructor(
         }
     }
 
-    fun addEntityBasket(entity: BasketEntity) {
+    fun insertEntity(entity: BasketEntity) {
         viewModelScope.launch {
             insertEntityUseCase(entity = entity)
         }

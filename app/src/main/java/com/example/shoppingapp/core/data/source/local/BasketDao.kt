@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface BasketDao {
 
     @Query("SELECT * FROM basket ORDER BY id DESC")
-    fun getAllBasketEntity(): Flow<List<BasketEntity>>
+    fun getAllBasketEntities(): Flow<List<BasketEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBasketEntity(entity: BasketEntity)
@@ -21,7 +21,7 @@ interface BasketDao {
     suspend fun deleteBasketEntity(entity: BasketEntity)
 
     @Query("DELETE FROM basket")
-    suspend fun deleteAllBasketEntity()
+    suspend fun deleteAllBasketEntities()
 
     @Update
     suspend fun updateBasketEntity(entity: BasketEntity)

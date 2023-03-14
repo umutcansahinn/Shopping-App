@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val binding by  viewBinding(ActivityMainBinding::inflate)
+    private val binding by viewBinding(ActivityMainBinding::inflate)
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +26,15 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
-        NavigationUI.setupWithNavController(binding.navView,navController)
+        NavigationUI.setupWithNavController(binding.navView, navController)
 
-        navHostFragment.navController.addOnDestinationChangedListener { _,destination,_->
+        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
 
-            when(destination.id) {
-                R.id.homeDetailFragment,
-                R.id.splashFragment,
-                R.id.onBoardingFragment -> binding.navView.gone()
+            when (destination.id) {
+                R.id.navigation_home_detail,
+                R.id.navigation_splash,
+                R.id.navigation_on_boarding,
+                R.id.navigation_payment-> binding.navView.gone()
 
                 else -> binding.navView.visible()
             }

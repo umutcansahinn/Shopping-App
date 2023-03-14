@@ -15,9 +15,9 @@ interface ShoppingRepository {
 
     suspend fun deleteEntity(entity: BasketEntity)
 
-    suspend fun deleteAllEntity()
+    suspend fun deleteAllEntities()
 
     suspend fun updateEntity(entity: BasketEntity)
 
-    fun getAllBasketEntity(): Flow<List<BasketEntity>>
+    fun getAllBasketEntities(): Flow<List<BasketEntity>>
 }

@@ -1,13 +1,13 @@
 package com.example.shoppingapp.core.di
 
-import com.example.shoppingapp.core.domain.use_case.delete_all_entity.DeleteAllEntityUseCase
-import com.example.shoppingapp.core.domain.use_case.delete_all_entity.DeleteAllEntityUseCaseImpl
+import com.example.shoppingapp.core.domain.use_case.delete_all_entities.DeleteAllEntitiesUseCase
+import com.example.shoppingapp.core.domain.use_case.delete_all_entities.DeleteAllEntitiesUseCaseImpl
 import com.example.shoppingapp.core.domain.use_case.delete_entity.DeleteEntityUseCase
 import com.example.shoppingapp.core.domain.use_case.delete_entity.DeleteEntityUseCaseImpl
 import com.example.shoppingapp.core.domain.use_case.gel_all_products.GetAllProductsUseCase
 import com.example.shoppingapp.core.domain.use_case.gel_all_products.GetAllProductsUseCaseImpl
-import com.example.shoppingapp.core.domain.use_case.get_all_entity.GetAllEntityUseCase
-import com.example.shoppingapp.core.domain.use_case.get_all_entity.GetAllEntityUseCaseImpl
+import com.example.shoppingapp.core.domain.use_case.get_all_entities.GetAllEntitiesUseCase
+import com.example.shoppingapp.core.domain.use_case.get_all_entities.GetAllEntitiesUseCaseImpl
 import com.example.shoppingapp.core.domain.use_case.insert_entity.InsertEntityUseCase
 import com.example.shoppingapp.core.domain.use_case.insert_entity.InsertEntityUseCaseImpl
 import com.example.shoppingapp.core.domain.use_case.single_product.GetSingleProductUseCase
@@ -50,13 +50,11 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindGetAllEntityUseCase(
-        getAllEntityUseCaseImpl: GetAllEntityUseCaseImpl
-    ): GetAllEntityUseCase
+        getAllEntityUseCaseImpl: GetAllEntitiesUseCaseImpl
+    ): GetAllEntitiesUseCase
 
     @Binds
     abstract fun bindDeleteAllEntityUseCase(
-        deleteAllEntityUseCaseImpl: DeleteAllEntityUseCaseImpl
-    ): DeleteAllEntityUseCase
-
-
+        deleteAllEntityUseCaseImpl: DeleteAllEntitiesUseCaseImpl
+    ): DeleteAllEntitiesUseCase
 }
