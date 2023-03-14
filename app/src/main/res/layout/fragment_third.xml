@@ -8,11 +8,13 @@
     tools:context=".feature.on_boarding.screens.ThirdFragment">
 
 
-    <ImageView
-        android:id="@+id/imageView"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
         android:layout_width="200dp"
         android:layout_height="250dp"
-        android:src="@color/orange_500"
+        app:lottie_rawRes="@raw/on_boarding3"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,14 +24,13 @@
         android:id="@+id/textViewDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="dadadasda dsadsadas sadas dasdsa d
-        sadasd sad asd asdasdsadas asdas dsadas sadas"
+        android:text="@string/on_boarding_text"
         android:textColor="@color/orange_500"
         android:textSize="18sp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/animationView"
         android:layout_margin="20dp"/>
 
     <TextView

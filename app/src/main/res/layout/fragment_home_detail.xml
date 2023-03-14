@@ -60,7 +60,7 @@
                 android:id="@+id/textViewProductCategoryName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="category"
+                android:text="@string/category"
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:gravity="center"
@@ -73,7 +73,7 @@
                 android:id="@+id/textViewProductDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="description"
+                android:text="@string/description"
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 android:gravity="center"
@@ -96,9 +96,8 @@
                     android:id="@+id/textViewProductPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="price"
+                    android:text="@string/price"
                     android:textColor="@color/white"
-
                     android:layout_marginEnd="100dp"
                     android:textSize="25sp"
                     android:textStyle="bold"
@@ -110,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
                     android:background="@drawable/button_corner"
-                    android:text="Add to Bag"
+                    android:text="@string/add_to_bag"
                     android:textColor="@color/orange_500"
                     android:layout_marginEnd="16dp"/>
 

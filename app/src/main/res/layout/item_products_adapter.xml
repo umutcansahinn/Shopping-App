@@ -38,7 +38,7 @@
 
             <TextView
                 android:id="@+id/textViewProductCategoryName"
-                android:text="Category"
+                android:text="@string/category"
                 android:textSize="17sp"
                 android:gravity="center"
                 android:textColor="@color/white"
@@ -47,7 +47,7 @@
 
             <TextView
                 android:id="@+id/textViewProductPrice"
-                android:text="Price"
+                android:text="@string/price"
                 android:textSize="17sp"
                 android:textColor="@color/white"
                 android:gravity="center"

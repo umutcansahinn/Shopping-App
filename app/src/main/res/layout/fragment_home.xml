@@ -30,7 +30,7 @@
         android:id="@+id/textViewErrorMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ERROR"
+        android:text="@string/error"
         android:textSize="20sp"
         android:textColor="@color/red"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -10,4 +10,24 @@
     <string name="on_boarding">onBoarding</string>
     <string name="finished">finished</string>
     <string name="siparisiniz_alinmistir">Siparisiniz Alinmistir</string>
+    <string name="error">ERROR</string>
+    <string name="total_amount">Total Amount:</string>
+    <string name="_0">0$</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="empty_list">empty List</string>
+    <string name="next">Next</string>
+    <string name="category">category</string>
+    <string name="description">description</string>
+    <string name="price">price</string>
+    <string name="add_to_bag">Add to Bag</string>
+    <string name="card_information">Card Information</string>
+    <string name="card_name">Card Name</string>
+    <string name="card_number">1111 1111 1111 1111</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="cvv">CVV</string>
+    <string name="address">Address</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="_1">1</string>
+    <string name="on_boarding_text">aaaa a aaaa aaaaaaaaa aaaaa aaaaa aaaaa aaaaa aaaa aaaaaaaaa aa aaaaaa</string>
 </resources>
