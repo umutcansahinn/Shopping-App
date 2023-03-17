@@ -1,0 +1,20 @@
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/basket_graph"
+        app:startDestination="@id/navigation_basket">
+        <fragment
+            android:id="@+id/navigation_basket"
+            android:name="com.example.shoppingapp.feature.basket.BasketFragment"
+            android:label="@string/title_basket"
+            tools:layout="@layout/fragment_basket">
+            <action
+                android:id="@+id/action_navigation_basket_to_navigation_payment"
+                app:destination="@id/navigation_payment" />
+        </fragment>
+        <fragment
+            android:id="@+id/navigation_payment"
+            android:name="com.example.shoppingapp.feature.payment.PaymentFragment"
+            android:label="@string/title_payment"
+            tools:layout="@layout/fragment_payment" />
+    </navigation>

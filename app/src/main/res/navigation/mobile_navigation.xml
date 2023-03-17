@@ -16,16 +16,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_basket"
-        android:name="com.example.shoppingapp.feature.basket.BasketFragment"
-        android:label="@string/title_basket"
-        tools:layout="@layout/fragment_basket" >
-        <action
-            android:id="@+id/action_navigation_basket_to_navigation_payment"
-            app:destination="@id/navigation_payment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_home_detail"
         android:name="com.example.shoppingapp.feature.home_detail.HomeDetailFragment"
         android:label="fragment_home_detail"
@@ -58,10 +48,7 @@
             android:id="@+id/action_navigation_on_boarding_to_navigation_home"
             app:destination="@id/navigation_home" />
     </fragment>
-    <fragment
-        android:id="@+id/navigation_payment"
-        android:name="com.example.shoppingapp.feature.payment.PaymentFragment"
-        android:label="fragment_payment"
-        tools:layout="@layout/fragment_payment" />
 
+
+    <include app:graph="@navigation/basket_graph"/>
 </navigation>
