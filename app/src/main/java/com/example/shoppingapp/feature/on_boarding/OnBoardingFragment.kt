@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
 
     private val binding by viewBinding(FragmentOnBoardingBinding::bind)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

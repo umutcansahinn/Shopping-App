@@ -5,10 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shoppingapp.R
 import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.common.gone
@@ -28,15 +28,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getAllProducts()
-        observe()
+        observeData()
         initView()
     }
 
-    private fun observe() {
+    private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
+            viewModel.productList
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect {
                     when (it) {
                         is Resource.Loading -> {
                             with(binding) {
@@ -56,7 +56,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         }
                         is Resource.Success -> {
                             productsAdapter.productsList = it.data
-
                             with(binding) {
                                 progressBar.gone()
                                 textViewErrorMessage.gone()
@@ -65,13 +64,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         }
                     }
                 }
-            }
         }
     }
 
+
     private fun initView() {
         binding.recyclerView.adapter = productsAdapter
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
     }
 
     private fun itemSetClick(id: Int) {

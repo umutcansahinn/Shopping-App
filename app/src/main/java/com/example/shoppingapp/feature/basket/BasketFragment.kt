@@ -1,14 +1,15 @@
 package com.example.shoppingapp.feature.basket
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoppingapp.R
 import com.example.shoppingapp.core.common.Resource
 import com.example.shoppingapp.core.common.gone
@@ -32,15 +33,15 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe()
+        observeData()
         initView()
-        viewModel.getEntityFromRoom()
     }
 
-    private fun observe() {
+    private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
+            viewModel.basketList
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect {
                     when (it) {
                         is Resource.Loading -> {
                             with(binding) {
@@ -80,18 +81,15 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                                         recyclerView.gone()
                                     }
                                 }
-
                             }
                         }
                     }
                 }
-            }
         }
     }
 
     private fun initView() {
         binding.recyclerView.adapter = basketAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun onPlusOrMinusClickListener(entity: BasketEntity, isPlus: Boolean) {
@@ -103,6 +101,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun basketUi(entities: List<BasketEntity>) {
         var totalAmount = 0f
         entities.forEach {

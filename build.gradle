@@ -5,8 +5,10 @@ buildscript {
         retrofit_version = "2.9.0"
         gson_version = "2.10"
         glide_version = "4.14.2"
-        room_version = "2.5.0"
+        room_version = "2.5.1"
         lottieVersion = "5.2.0"
+        okhttp_version = "3.6.0"
+        retrofit_interceptor_version = "4.10.0"
     }
     dependencies {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"

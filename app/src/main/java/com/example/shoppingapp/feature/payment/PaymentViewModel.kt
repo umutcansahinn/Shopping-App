@@ -12,7 +12,6 @@ class PaymentViewModel @Inject constructor(
     private val deleteAllEntitiesUseCase: DeleteAllEntitiesUseCase
 ): ViewModel() {
 
-
     fun deleteAllEntityFromRoom() {
         viewModelScope.launch {
             deleteAllEntitiesUseCase()

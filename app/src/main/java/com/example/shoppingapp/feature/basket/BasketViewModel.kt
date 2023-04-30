@@ -21,12 +21,16 @@ class BasketViewModel @Inject constructor(
     private val updateEntityUseCase: UpdateEntityUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Resource<Flow<List<BasketEntity>>>>(Resource.Loading)
-    val state get() = _state.asStateFlow()
+    private val _basketList = MutableStateFlow<Resource<Flow<List<BasketEntity>>>>(Resource.Loading)
+    val basketList get() = _basketList.asStateFlow()
 
-    fun getEntityFromRoom() {
+    init {
+        getEntityFromRoom()
+    }
+
+    private fun getEntityFromRoom() {
         viewModelScope.launch {
-              _state.value = getAllEntitiesUseCase()
+            _basketList.value = getAllEntitiesUseCase()
         }
     }
 
@@ -36,15 +40,15 @@ class BasketViewModel @Inject constructor(
         }
     }
 
-    fun updateEntityFromRoom(entity: BasketEntity,isPlus: Boolean) {
+    fun updateEntityFromRoom(entity: BasketEntity, isPlus: Boolean) {
         viewModelScope.launch {
             if (isPlus) {
-                updateEntityUseCase(entity = entity.copy(itemCount = entity.itemCount +1))
-            }else {
+                updateEntityUseCase(entity = entity.copy(itemCount = entity.itemCount + 1))
+            } else {
                 if (entity.itemCount == 1) {
                     deleteEntityFromRoom(entity = entity)
                 } else {
-                    updateEntityUseCase(entity = entity.copy(itemCount = entity.itemCount -1))
+                    updateEntityUseCase(entity = entity.copy(itemCount = entity.itemCount - 1))
                 }
             }
         }

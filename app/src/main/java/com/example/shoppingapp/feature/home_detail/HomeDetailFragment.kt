@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
@@ -19,6 +20,7 @@ import com.example.shoppingapp.core.data.source.local.RatingEntity
 import com.example.shoppingapp.core.domain.domain_model.DomainModel
 import com.example.shoppingapp.databinding.FragmentHomeDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -30,14 +32,15 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observe()
+        observeData()
         initView()
     }
 
-    private fun observe() {
+    private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect {
+            viewModel.singleProduct
+                .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+                .collect {
                     when (it) {
                         is Resource.Loading -> {
                             with(binding) {}
@@ -51,18 +54,14 @@ class HomeDetailFragment : Fragment(R.layout.fragment_home_detail) {
                         }
                     }
                 }
-            }
         }
     }
 
     private fun initView() {
         val id = args.id
         viewModel.getSingleProduct(id = id)
-
         popBackStackEvent()
-
     }
-
     private fun popBackStackEvent() {
         binding.imageButtonBack.setOnClickListener {
             findNavController().popBackStack()

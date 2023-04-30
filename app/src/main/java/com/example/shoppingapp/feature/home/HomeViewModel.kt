@@ -11,19 +11,22 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-    @HiltViewModel
-    class HomeViewModel @Inject constructor(
-        private val getAllProductsUseCase: GetAllProductsUseCase
-    ) : ViewModel() {
-    
-        private val _state = MutableStateFlow<Resource<List<DomainModel>>>(Resource.Loading)
-        val state get() = _state.asStateFlow()
-    
-        fun getAllProducts() {
-            viewModelScope.launch {
-                getAllProductsUseCase().collect {
-                    _state.value = it
-                }
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getAllProductsUseCase: GetAllProductsUseCase
+) : ViewModel() {
+
+    private val _productList = MutableStateFlow<Resource<List<DomainModel>>>(Resource.Loading)
+    val productList get() = _productList.asStateFlow()
+
+    init {
+        getAllProducts()
+    }
+    private fun getAllProducts() {
+        viewModelScope.launch {
+            getAllProductsUseCase().collect {
+                _productList.value = it
             }
         }
     }
+}

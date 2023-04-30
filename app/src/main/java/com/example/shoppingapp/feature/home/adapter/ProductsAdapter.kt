@@ -12,7 +12,7 @@ import com.example.shoppingapp.databinding.ItemProductsAdapterBinding
 
 class ProductsAdapter(private val itemClickListener: ((Int) -> Unit)) :
     RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
-    class ViewHolder(val binding: ItemProductsAdapterBinding) :
+    inner class ViewHolder(val binding: ItemProductsAdapterBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     private val differCallback = object : DiffUtil.ItemCallback<DomainModel>() {
@@ -44,6 +44,7 @@ class ProductsAdapter(private val itemClickListener: ((Int) -> Unit)) :
         return productsList.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             imageViewProductImage.loadImage(productsList[position].image)

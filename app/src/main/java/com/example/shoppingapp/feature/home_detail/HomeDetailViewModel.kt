@@ -19,13 +19,13 @@ class HomeDetailViewModel @Inject constructor(
     private val insertEntityUseCase: InsertEntityUseCase
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<Resource<DomainModel>>(Resource.Loading)
-    val state get() = _state.asStateFlow()
+    private val _singleProduct = MutableStateFlow<Resource<DomainModel>>(Resource.Loading)
+    val singleProduct get() = _singleProduct.asStateFlow()
 
     fun getSingleProduct(id: Int) {
         viewModelScope.launch {
             getSingleProductUseCase(id = id).collect { result ->
-                _state.value = result
+                _singleProduct.value = result
             }
         }
     }
