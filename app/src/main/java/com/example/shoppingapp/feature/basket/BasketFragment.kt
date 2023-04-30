@@ -63,7 +63,7 @@ class BasketFragment : Fragment(R.layout.fragment_basket) {
                         is Resource.Success -> {
                             it.data.collect { list ->
                                 if (list.isNotEmpty()) {
-                                    basketAdapter.basketList = list
+                                    basketAdapter.submitList(list)
                                     basketUi(entities = list)
 
                                     with(binding) {

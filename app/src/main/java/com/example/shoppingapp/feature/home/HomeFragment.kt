@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.shoppingapp.R
 import com.example.shoppingapp.core.common.Resource
@@ -24,7 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private val binding by viewBinding(FragmentHomeBinding::bind)
     private val viewModel by viewModels<HomeViewModel>()
-    private val productsAdapter = ProductsAdapter(::itemSetClick)
+    private val productsAdapter = ProductsAdapter(::itemSetClick, arrayListOf())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,8 +54,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                             }
                         }
                         is Resource.Success -> {
-                            productsAdapter.productsList = it.data
                             with(binding) {
+                                productsAdapter.updateList(it.data)
                                 progressBar.gone()
                                 textViewErrorMessage.gone()
                                 recyclerView.visible()

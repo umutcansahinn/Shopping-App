@@ -3,32 +3,17 @@ package com.example.shoppingapp.feature.home.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoppingapp.core.common.loadImage
 import com.example.shoppingapp.core.domain.domain_model.DomainModel
 import com.example.shoppingapp.databinding.ItemProductsAdapterBinding
 
-class ProductsAdapter(private val itemClickListener: ((Int) -> Unit)) :
-    RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
+class ProductsAdapter(
+    private val itemClickListener: ((Int) -> Unit),
+    private val list: ArrayList<DomainModel>
+) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemProductsAdapterBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    private val differCallback = object : DiffUtil.ItemCallback<DomainModel>() {
-        override fun areItemsTheSame(oldItem: DomainModel, newItem: DomainModel): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: DomainModel, newItem: DomainModel): Boolean {
-            return oldItem == newItem
-        }
-    }
-    private val differ = AsyncListDiffer(this, differCallback)
-
-    var productsList: List<DomainModel>
-        get() = differ.currentList
-        set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -40,20 +25,25 @@ class ProductsAdapter(private val itemClickListener: ((Int) -> Unit)) :
         )
     }
 
-    override fun getItemCount(): Int {
-        return productsList.size
-    }
+    override fun getItemCount(): Int = list.size
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-            imageViewProductImage.loadImage(productsList[position].image)
-            textViewProductCategoryName.text = productsList[position].category
-            textViewProductPrice.text = "${productsList[position].price}$"
+            imageViewProductImage.loadImage(list[position].image)
+            textViewProductCategoryName.text = list[position].category
+            textViewProductPrice.text = "${list[position].price}$"
 
             cardView.setOnClickListener {
-                itemClickListener.invoke(productsList[position].id)
+                itemClickListener.invoke(list[position].id)
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(newList: List<DomainModel>) {
+        list.clear()
+        list.addAll(newList)
+        notifyDataSetChanged()
     }
 }
