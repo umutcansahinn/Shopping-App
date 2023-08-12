@@ -57,6 +57,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation("com.google.truth:truth:1.1.2")
     testImplementation("com.google.truth:truth:1.1.2")
+    androidTestImplementation("com.google.truth:truth:1.1.2")
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
