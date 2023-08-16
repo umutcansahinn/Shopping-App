@@ -2,6 +2,7 @@ package com.example.shoppingapp.core.data.repository
 
 import com.example.shoppingapp.core.data.source.local.BasketEntity
 import com.example.shoppingapp.core.data.source.local.RatingEntity
+import com.example.shoppingapp.core.domain.repository.ShoppingRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -12,7 +13,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class ShoppingRepositoryTest {
 
-    private lateinit var fakeShoppingRepository: FakeShoppingRepository
+    private lateinit var fakeShoppingRepository: ShoppingRepository
     private lateinit var entityFirst: BasketEntity
     private lateinit var entitySecond: BasketEntity
 
@@ -20,24 +21,24 @@ class ShoppingRepositoryTest {
     fun setup() {
         fakeShoppingRepository = FakeShoppingRepository()
         entityFirst = BasketEntity(
-            "c",
-            "d",
-            1,
-            "i",
-            0.0,
-            RatingEntity(0, 0.0),
-            "t",
-            1
+            category = "c",
+            description = "d",
+            id = 1,
+            image = "i",
+            price = 0.0,
+            RatingEntity(count = 0, rate = 0.0),
+            title = "t",
+            itemCount = 1
         )
         entitySecond = BasketEntity(
-            "c",
-            "d",
-            2,
-            "i",
-            0.0,
-            RatingEntity(0, 0.0),
-            "t",
-            1
+            category = "c",
+            description = "d",
+            id = 2,
+            image = "i",
+            price = 0.0,
+            RatingEntity(count = 0, rate = 0.0),
+            title = "t",
+            itemCount = 1
         )
     }
 
